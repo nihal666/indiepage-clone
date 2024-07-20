@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   const svix_signature = headerPayload.get("svix-signature");
 
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error occurred -- no svix headers", {
+    return new Response("Error occured -- no svix headers", {
       status: 400,
     });
   }
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error occurred", {
+    return new Response("Error occured", {
       status: 400,
     });
   }
@@ -47,29 +47,14 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     const { id, email_addresses, image_url } = evt.data;
 
-    if (!email_addresses || email_addresses.length === 0) {
-      console.error("No email addresses provided in the webhook event");
-      return new Response("Error occurred -- no email addresses", {
-        status: 400,
-      });
-    }
-
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
       imageUrl: image_url,
     };
 
-    try {
-      await createUser(user);
-      return new Response("User created successfully", { status: 200 });
-    } catch (error) {
-      console.error("Error creating user:", error);
-      return new Response("Error occurred while creating user", {
-        status: 500,
-      });
-    }
+    await createUser(user);
   }
 
-  return new Response("Event type not handled", { status: 400 });
+  return new Response("User created successfully", { status: 200 });
 }

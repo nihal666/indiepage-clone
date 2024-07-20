@@ -15,8 +15,8 @@ export interface Company {
 }
 
 export interface ColorTheme {
-  name: string;
-  primary: string;
-  secondary: string;
-  text: string;
+  name?: string;
+  primary?: string;
+  secondary?: string;
+  text?: string;
 }

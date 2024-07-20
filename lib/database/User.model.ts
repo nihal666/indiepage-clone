@@ -5,19 +5,18 @@ import mongoose, { Document, Schema } from "mongoose";
 interface IUser extends Document {
   clerkId: string;
   email: string;
-  name: string;
-  avatar: string;
-  bio: string;
+  name?: string;
+  avatar?: string;
+  bio?: string;
   location?: string;
   price?: string;
-  socialProfiles: SocialProfile[];
-  companies: Company[];
-  font: string;
-  colorTheme: ColorTheme;
+  socialProfiles?: SocialProfile[];
+  companies?: Company[];
+  font?: string;
+  colorTheme?: ColorTheme;
   imageUrl?: string; // Added imageUrl property
 }
 
-// Create the schema
 const UserSchema: Schema = new Schema(
   {
     clerkId: { type: String, required: true, unique: true },
@@ -27,26 +26,25 @@ const UserSchema: Schema = new Schema(
       unique: true,
       match: /\S+@\S+\.\S+/,
     },
-    name: { type: String, required: true },
-    avatar: { type: String, required: true },
-    bio: { type: String, required: true },
+    name: { type: String },
+    avatar: { type: String },
+    bio: { type: String },
     location: { type: String },
     price: { type: String },
     socialProfiles: [
       {
-        platform: { type: String, required: true },
+        platform: { type: String },
         url: {
           type: String,
-          required: true,
           match: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
         },
       },
     ],
     companies: [
       {
-        name: { type: String, required: true },
-        image: { type: String, required: true },
-        description: { type: String, required: true },
+        name: { type: String },
+        image: { type: String },
+        description: { type: String },
         website: {
           type: String,
           match: /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i,
@@ -59,10 +57,10 @@ const UserSchema: Schema = new Schema(
     ],
     font: { type: String, default: "Arial, sans-serif" },
     colorTheme: {
-      name: { type: String, required: true },
-      primary: { type: String, required: true },
-      secondary: { type: String, required: true },
-      text: { type: String, required: true },
+      name: { type: String },
+      primary: { type: String },
+      secondary: { type: String },
+      text: { type: String },
     },
     imageUrl: { type: String }, // Added imageUrl property
   },

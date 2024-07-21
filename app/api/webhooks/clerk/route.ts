@@ -45,7 +45,7 @@ export async function POST(req: Request) {
 
   const eventType = evt.type;
   if (eventType === "user.created") {
-    const { id, email_addresses, image_url } = evt.data;
+    const { id, email_addresses } = evt.data;
 
     if (!email_addresses || email_addresses.length === 0) {
       console.error("No email addresses provided in the webhook event");
@@ -57,11 +57,10 @@ export async function POST(req: Request) {
     const user = {
       clerkId: id,
       email: email_addresses[0].email_address,
-      imageUrl: image_url,
     };
 
     try {
-      await createUser(user);
+      await createUser(user.clerkId, user.email);
       return new Response("User created successfully", { status: 200 });
     } catch (error) {
       console.error("Error creating user:", error);

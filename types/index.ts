@@ -20,3 +20,12 @@ export interface ColorTheme {
   secondary?: string;
   text?: string;
 }
+
+export type SocialPlatform =
+  | "github"
+  | "twitter"
+  | "tiktok"
+  | "instagram"
+  | "youtube"
+  | "linkedin"
+  | "email";
